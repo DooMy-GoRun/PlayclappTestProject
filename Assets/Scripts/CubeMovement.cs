@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CubeMove : MonoBehaviour
+public class CubeMovement : MonoBehaviour
 {
     [SerializeField] private InputFieldManager _inputText;
 
@@ -11,7 +11,9 @@ public class CubeMove : MonoBehaviour
 
     private Vector3 _startPositionCube;
     private Vector3 _endPositionCube;
-    private float _pathPrecentage;
+    private float _pathPercentage;
+
+    private const float FullPathPercentage = 1;
 
     private void Awake()
     {
@@ -30,16 +32,19 @@ public class CubeMove : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_pathPrecentage > 1)
+        if (_pathPercentage > FullPathPercentage)
         {
+            gameObject.SetActive(false);
             Destroy(gameObject);
             return;
         }
 
-        _pathPrecentage += _speed;
-        _cube.position = Vector3.Lerp(_startPositionCube, _endPositionCube, _pathPrecentage);
+        _pathPercentage += _speed;
+        _cube.position = Vector3.Lerp(_startPositionCube, _endPositionCube, _pathPercentage);
 
         if (_speed == 0)
+        {
             Destroy(gameObject, 2f);
+        }
     }
 }
